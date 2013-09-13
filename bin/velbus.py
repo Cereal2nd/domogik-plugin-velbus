@@ -35,8 +35,8 @@ from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 from domogik.xpl.common.xplconnector import Listener
 from domogik.xpl.common.queryconfig import Query
-from domogik_packages.xpl.lib.velbus import VelbusException
-from domogik_packages.xpl.lib.velbus import VelbusDev
+from packages.plugin_velbus.lib.velbus import VelbusException
+from packages.plugin_velbus.lib.velbus import VelbusDev
 import threading
 import re
 
@@ -48,15 +48,18 @@ class VelbusManager(XplPlugin):
         """ Init plugin
         """
         XplPlugin.__init__(self, name='velbus')
-        self._config = Query(self.myxpl, self.log)
+        # check if the plugin is configured. If not, this will stop the plugin and log an error
+        if not self.check_configured():
+            return
+
         # get the config values
-        device_type = self._config.query('velbus', 'connection-type')
+        device_type = self.get_config("connection-type")
         if device_type == None:
             self.log.error('Devicetype is not configured, exitting') 
             print('Devicetype is not configured, exitting')
             self.force_leave()
             return
-        device = self._config.query('velbus', 'device')
+        device = self.get_config("device")
         #device = '192.168.1.101:3788'
         if device == None:
             self.log.error('Device is not configured, exitting') 
@@ -76,7 +79,7 @@ class VelbusManager(XplPlugin):
             return
 
         # Init RFXCOM
-        self.manager  = VelbusDev(self.log, self.send_xpl,
+        self.manager = VelbusDev(self.log, self.send_xpl,
 			self.send_trig, self.get_stop())
         self.add_stop_cb(self.manager.close)
         
@@ -102,7 +105,7 @@ class VelbusManager(XplPlugin):
                                    {})
         self.register_thread(listenthread)
         listenthread.start()
-        self.enable_hbeat()
+        self.ready()
 
     def send_xpl(self, schema, data):
         """ Send xPL message on network

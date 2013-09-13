@@ -354,14 +354,6 @@
             ]
         }
     }, 
-    "files": [
-        "src/share/domogik/plugins/velbus.json", 
-        "src/share/domogik/design/plugin/velbus/icon.png", 
-        "src/domogik_packages/xpl/bin/velbus.py", 
-        "src/domogik_packages/xpl/lib/velbus.py", 
-        "src/domogik_packages/conversions/velbus.py", 
-        "src/domogik_packages/xpl/helper/velbus.py"
-    ], 
     "identity": {
         "author": "Maikel Punie", 
         "author_email": "maikel.puni@gmail.com", 
@@ -377,16 +369,9 @@
         "documentation": "http://wiki.domogik.org/plugin_velbus", 
         "domogik_min_version": "0.2.0", 
         "id": "velbus", 
+        "name": "velbus", 
         "type": "plugin", 
         "version": "0.5.0"
     }, 
-    "json_version": 2, 
-    "udev-rules": [
-        {
-            "description": "Velbus USB interface", 
-            "filename": "velbus.rules", 
-            "model": "VMB1USB", 
-            "rule": "SUBSYSTEM==\"tty\" ATTRS(manufacturer)==\"Velleman Projects\" ATTRS{product}==\"VMB1USB Velbus USB interface\" SYMLINK+=\"velbus\" MODE=\"0666\""
-        }
-    ]
+    "json_version": 2
 }

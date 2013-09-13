@@ -41,6 +41,7 @@ MODULE_TYPES = {
  31 : {"id": "VMBGP2", "subtype": "INPUT"},
  32 : {"id": "VMBGP4", "subtype": "INPUT"},
  33 : {"id": "VMBGP0", "subtype": "INPUT"},
+ 34 : {"id": "VMB7IN", "subtype": "INPUT"},
 }
 
 MSG_TYPES = {
@@ -70,7 +71,9 @@ MSG_TYPES = {
   103 : "firmware memory",
   104 : "firmware memory write confirmed",
   105 : "read firmware memory",
+  183 : "date set",
   184 : "dimmer channel status",
+  190 : "kWh status",
   198 : "temperature settings part3",
   199 : "statistics request",
   200 : "statistics",
@@ -420,8 +423,11 @@ class VelbusDev:
            Process a 255 Message
            Node type => send out as answer on a module_type_request
         """
+        print(data)
         naddress = ord(data[2])
         ntype = ord(data[5])
+        print("===========")
+        print(ntype)
         self._log.info("Found node with address {0} and module_type {1}".format(str(naddress), MODULE_TYPES[ntype]['id']))
         self._nodes[naddress] = ntype
 
