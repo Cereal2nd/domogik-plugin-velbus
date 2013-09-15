@@ -208,7 +208,7 @@ class VelbusDev:
        
     def scan(self):
         self._log.info("Starting the bus scan")
-        for add in range(0,10):
+        for add in range(0,255):
             self.send_moduletyperequest(add)
         self._log.info("Bus scan finished")
  
@@ -479,9 +479,9 @@ class VelbusDev:
         channel = (ord(data[5]) & 3) + 1
         pulses = (ord(data[5]) >> 2) * 100
         counter = (ord(data[6]) << 24) + (ord(data[7]) << 16) + (ord(data[8]) << 8) + ord(data[9])
-        kwh = counter/pulses
+        kwh = float(float(counter)/pulses)
         delay = (ord(data[10]) << 8) + ord(data[11])
-        watt = (1000 * 1000 * 3600) / (delay * pulses)
+        watt = float((1000 * 1000 * 3600) / (delay * pulses))
         # transmit kwh
         self._callback("sensor.basic",
                {"device": device, "channel": channel,
@@ -490,8 +490,8 @@ class VelbusDev:
         # transmit watt
         self._callback("sensor.basic",
                {"device": device, "channel": channel,
-		"type": "power", "units": "kW",
-               "current": str(watt / 1000) })
+		"type": "power", "units": "W",
+               "current": str(watt) })
 
     def _process_184(self, data):
         """

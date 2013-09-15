@@ -299,7 +299,7 @@
         },
         "power": {
 		"name": "Power_sensor",
-		"data_type": "DT_kPower",
+		"data_type": "DT_Power",
 		"conversion": ""
 	},
         "energy": {
