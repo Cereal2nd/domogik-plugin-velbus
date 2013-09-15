@@ -83,21 +83,15 @@ class VelbusManager(XplPlugin):
 			self.send_trig, self.get_stop())
         self.add_stop_cb(self.manager.close)
         
-        # Create a listener for all messages used by RFXCOM
-        Listener(self.process_lighting_basic, self.myxpl,
-                 {'xpltype': 'xpl-cmnd', 'schema': 'lighting.basic'})
-        Listener(self.process_shutter_basic, self.myxpl,
-                 {'xpltype': 'xpl-cmnd', 'schema': 'shutter.basic'})
-        # Create listeners
+	# try opening
         try:
             self.manager.open(device, device_type)
         except VelbusException as ex:
             self.log.error(ex.value)
             self.force_leave()
             return
-        self.manager.scan()
             
-        # Start reading RFXCOM
+        # Start reading thread
         listenthread = threading.Thread(None,
                                    self.manager.listen,
                                    "velbus-process-reader",
@@ -105,6 +99,17 @@ class VelbusManager(XplPlugin):
                                    {})
         self.register_thread(listenthread)
         listenthread.start()
+
+	# Create the xpl listeners
+	Listener(self.process_lighting_basic, self.myxpl,
+		 {'xpltype': 'xpl-cmnd', 'schema': 'lighting.basic'})
+	Listener(self.process_shutter_basic, self.myxpl,
+		 {'xpltype': 'xpl-cmnd', 'schema': 'shutter.basic'})
+
+	# start scanning the bus
+        self.manager.scan()
+
+	# notify ready
         self.ready()
 
     def send_xpl(self, schema, data):

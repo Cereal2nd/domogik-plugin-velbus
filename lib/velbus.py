@@ -208,7 +208,7 @@ class VelbusDev:
        
     def scan(self):
         self._log.info("Starting the bus scan")
-        for add in range(0,255):
+        for add in range(0,10):
             self.send_moduletyperequest(add)
         self._log.info("Bus scan finished")
  
@@ -270,7 +270,7 @@ class VelbusDev:
     def write_packet(self, address, data):
         """ put a packet in the write queu
         """
-        self._log.info("write packet")
+        self._log.debug("put packet for {0} in send queue ({1})".format(address, data))
         self.write_rfx.put_nowait( {"address": address,
 				"data": data}) 
 
@@ -423,11 +423,8 @@ class VelbusDev:
            Process a 255 Message
            Node type => send out as answer on a module_type_request
         """
-        print(data)
         naddress = ord(data[2])
         ntype = ord(data[5])
-        print("===========")
-        print(ntype)
         self._log.info("Found node with address {0} and module_type {1}".format(str(naddress), MODULE_TYPES[ntype]['id']))
         self._nodes[naddress] = ntype
 
@@ -476,6 +473,25 @@ class VelbusDev:
                 {"device" : str(ord(data[2])),
                 "channel": str(ord(data[5]) - 1),
                 "level" : level})
+
+    def _process_190(self, data):
+        device = ord(data[2])
+        channel = (ord(data[5]) & 3) + 1
+        pulses = (ord(data[5]) >> 2) * 100
+        counter = (ord(data[6]) << 24) + (ord(data[7]) << 16) + (ord(data[8]) << 8) + ord(data[9])
+        kwh = counter/pulses
+        delay = (ord(data[10]) << 8) + ord(data[11])
+        watt = (1000 * 1000 * 3600) / (delay * pulses)
+        # transmit kwh
+        self._callback("sensor.basic",
+               {"device": device, "channel": channel,
+		"type": "energy", "units": "kWh",
+               "current": str(kwh) })
+        # transmit watt
+        self._callback("sensor.basic",
+               {"device": device, "channel": channel,
+		"type": "power", "units": "kW",
+               "current": str(watt / 1000) })
 
     def _process_184(self, data):
         """
