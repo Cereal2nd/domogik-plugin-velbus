@@ -315,7 +315,7 @@
             "name": "Switch",
             "commands": ["set_level_bin"],
             "sensors": ["level_bin"],
-            "xpl_params": [
+            "params": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -339,7 +339,7 @@
             "name": "Dimmer",
             "commands": ["set_level_range"],
             "sensors": ["level_range"],
-            "xpl_params": [
+            "params": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -362,7 +362,7 @@
             "name": "Temperature",
             "commands": [],
             "sensors": ["temp"],
-            "xpl_params": [
+            "params": [
                 {
                     "key": "device",
                     "description": "The decimal address",
@@ -378,7 +378,7 @@
             "name": "Energy",
             "commands": [],
             "sensors": ["power", "energy"],
-            "xpl_params": [
+            "params": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -401,7 +401,7 @@
             "name": "Shutter",
             "commands": [],
             "sensors": [],
-            "xpl_params": []
+            "params": []
         },
         "velbus.input": {
             "id": "velbus.input",
@@ -409,7 +409,7 @@
             "name": "Input",
             "commands": [],
             "sensors": ["input"],
-            "xpl_params": [
+            "params": [
 	        {
                     "key": "channel",
                     "description": "The channel number",
