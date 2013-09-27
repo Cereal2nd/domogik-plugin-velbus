@@ -83,21 +83,18 @@
         {
             "default": "False", 
             "description": "Automatically start plugin at Domogik startup", 
-            "id": "0", 
-            "interface": "no", 
             "key": "startup-plugin", 
-            "optionnal": "no", 
-            "options": [], 
+            "name": "startup plugin",
+            "required": "yes", 
             "type": "boolean"
         }, 
         {
             "default": "0", 
             "description": "define the connection type to velbus", 
-            "id": "1", 
-            "interface": "no", 
             "key": "connection-type", 
-            "optionnal": "no", 
-            "options": [
+            "name": "Connection type",
+            "required": "yes", 
+            "choices": [
                 "serial", 
                 "socket"
             ], 
@@ -106,11 +103,9 @@
         {
             "default": "/dev/ttyACM0", 
             "description": "velbus device (/dev/ttyACM0 for serial, or ip:port for socket", 
-            "id": "2", 
-            "interface": "no", 
             "key": "device", 
-            "optionnal": "no", 
-            "options": [], 
+            "name": "Device",
+            "required": "yes", 
             "type": "string"
         }
     ], 
@@ -430,8 +425,6 @@
     "identity": {
         "author": "Maikel Punie", 
         "author_email": "maikel.puni@gmail.com", 
-        "category": "velbus", 
-        "changelog": "0.1.0\n- relays only\n- serial comunication only \n0.2.0\n- added socket comunication\n0.3.0\n- added dimmer support\n0.4.0\n- added blind (up/down) support\n0.5.0\n- added temperature sensor support", 
         "dependencies": [
             {
                 "id": "pyserial (>=2.6)", 
@@ -439,12 +432,11 @@
             }
         ], 
         "description": "velbus interface", 
-        "documentation": "http://wiki.domogik.org/plugin_velbus", 
-        "domogik_min_version": "0.2.0", 
-        "id": "velbus", 
+        "domogik_min_version": "0.4.0", 
         "name": "velbus", 
         "type": "plugin", 
-        "version": "0.5.0"
+        "version": "0.5.0",
+        "tags": ["energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
 }
