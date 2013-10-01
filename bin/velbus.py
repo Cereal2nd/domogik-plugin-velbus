@@ -34,7 +34,6 @@ Velbus usb support
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 from domogik.xpl.common.xplconnector import Listener
-from domogik.xpl.common.queryconfig import Query
 from packages.plugin_velbus.lib.velbus import VelbusException
 from packages.plugin_velbus.lib.velbus import VelbusDev
 import threading
@@ -48,6 +47,9 @@ class VelbusManager(XplPlugin):
         """ Init plugin
         """
         XplPlugin.__init__(self, name='velbus')
+        # register helpers
+        self.register_helper('scan', 'test help', 'scan')
+
         # check if the plugin is configured. If not, this will stop the plugin and log an error
         if not self.check_configured():
             return
@@ -111,6 +113,9 @@ class VelbusManager(XplPlugin):
 
 	# notify ready
         self.ready()
+
+    def scan(self, test1, test2):
+        return "{0}-{1}".format(test1, test2)
 
     def send_xpl(self, schema, data):
         """ Send xPL message on network
