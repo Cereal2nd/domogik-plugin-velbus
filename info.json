@@ -249,7 +249,7 @@
        "set_level_bin": {
            "name": "Switch On or Off",
            "return_confirmation": true,
-           "params": [
+           "parameters": [
                {
                    "key": "level",
                    "data_type": "DT_Switch",
@@ -261,7 +261,7 @@
         "set_level_range": {
            "name": "Set to a level",
            "return_confirmation": true,
-           "params": [
+           "parameters": [
                {
                    "key": "level",
                    "data_type": "DT_Scale",
@@ -310,7 +310,7 @@
             "name": "Switch",
             "commands": ["set_level_bin"],
             "sensors": ["level_bin"],
-            "params": [
+            "parameters": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -334,7 +334,7 @@
             "name": "Dimmer",
             "commands": ["set_level_range"],
             "sensors": ["level_range"],
-            "params": [
+            "parameters": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -357,7 +357,7 @@
             "name": "Temperature",
             "commands": [],
             "sensors": ["temp"],
-            "params": [
+            "parameters": [
                 {
                     "key": "device",
                     "description": "The decimal address",
@@ -373,7 +373,7 @@
             "name": "Energy",
             "commands": [],
             "sensors": ["power", "energy"],
-            "params": [
+            "parameters": [
                 {
                     "key": "channel",
                     "description": "The channel number",
@@ -396,7 +396,7 @@
             "name": "Shutter",
             "commands": [],
             "sensors": [],
-            "params": []
+            "parameters": []
         },
         "velbus.input": {
             "id": "velbus.input",
@@ -404,7 +404,7 @@
             "name": "Input",
             "commands": [],
             "sensors": ["input"],
-            "params": [
+            "parameters": [
 	        {
                     "key": "channel",
                     "description": "The channel number",
