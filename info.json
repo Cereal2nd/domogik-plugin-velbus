@@ -275,32 +275,68 @@
 	"level_bin": {
 		"name": "level sensor",
                 "data_type": "DT_Switch",
-                "conversion": "from_level_to_DT_Switch"
+                "conversion": "from_level_to_DT_Switch",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
 	},
 	"level_range": {
 		"name": "level sensor",
                 "data_type": "DT_Scaling",
-                "conversion": "from_level_to_DT_Scaling"
+                "conversion": "from_level_to_DT_Scaling",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
 	},
         "input": {
-               "name": "sensor_sensor",
-               "data_type": "DT_State",
-               "conversion": "from_input_to_DT_State"
+                "name": "sensor_sensor",
+                "data_type": "DT_State",
+                "conversion": "from_input_to_DT_State",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
         },
         "temp": {
-               "name": "temp_sensor",
-               "data_type": "DT_Temp",
-               "conversion": ""
+                "name": "temp_sensor",
+                "data_type": "DT_Temp",
+                "conversion": "",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
         },
         "power": {
 		"name": "Power_sensor",
 		"data_type": "DT_Power",
-		"conversion": ""
+		"conversion": "",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
 	},
         "energy": {
 		"name": "Energy sensor",
 		"data_type": "DT_kActiveEnergy",
-		"conversion": ""
+		"conversion": "",
+                "history": {
+                    "store": true,
+                    "max": 0,
+                    "expire": 0,
+                    "round_value": 0
+                }
 	}
     },
     "device_types": {
