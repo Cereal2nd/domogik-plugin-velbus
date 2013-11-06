@@ -34,8 +34,8 @@ Velbus usb support
 from domogik.xpl.common.xplmessage import XplMessage
 from domogik.xpl.common.plugin import XplPlugin
 from domogik.xpl.common.xplconnector import Listener
-from packages.plugin_velbus.lib.velbus import VelbusException
-from packages.plugin_velbus.lib.velbus import VelbusDev
+from domogik_packages.plugin_velbus.lib.velbus import VelbusException
+from domogik_packages.plugin_velbus.lib.velbus import VelbusDev
 import threading
 import re
 

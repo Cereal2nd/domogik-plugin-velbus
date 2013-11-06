@@ -83,7 +83,7 @@
         {
             "default": "False", 
             "description": "Automatically start plugin at Domogik startup", 
-            "key": "startup-plugin", 
+            "key": "startup_startup", 
             "name": "startup plugin",
             "required": "yes", 
             "type": "boolean"
