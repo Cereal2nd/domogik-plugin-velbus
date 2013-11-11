@@ -38,7 +38,7 @@ mysql:
   encoding: utf8
 env:
   DMG_BRANCH=0.4-candidate
-  DMG_PLUGIN=diskfree
+  DMG_PLUGIN=velbus
 install:
   - which python
   - ls -l $(which python)
