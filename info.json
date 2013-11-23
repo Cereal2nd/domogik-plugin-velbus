@@ -349,6 +349,7 @@
             "parameters": [
                 {
                     "key": "channel",
+                    "xpl": true,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -356,6 +357,7 @@
                 },
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -373,6 +375,7 @@
             "parameters": [
                 {
                     "key": "channel",
+                    "xpl": true,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -380,6 +383,7 @@
                 },
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -396,6 +400,7 @@
             "parameters": [
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -412,6 +417,7 @@
             "parameters": [
                 {
                     "key": "channel",
+                    "xpl": true,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -419,6 +425,7 @@
                 },
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -443,6 +450,7 @@
             "parameters": [
 	        {
                     "key": "channel",
+                    "xpl": true,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 8,
@@ -450,6 +458,7 @@
                 },
                 {
                     "key": "device",
+                    "xpl": true,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
