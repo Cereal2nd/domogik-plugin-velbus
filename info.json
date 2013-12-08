@@ -276,6 +276,7 @@
 		"name": "level sensor",
                 "data_type": "DT_Switch",
                 "conversion": "from_level_to_DT_Switch",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -287,6 +288,7 @@
 		"name": "level sensor",
                 "data_type": "DT_Scaling",
                 "conversion": "from_level_to_DT_Scaling",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -298,6 +300,7 @@
                 "name": "sensor_sensor",
                 "data_type": "DT_State",
                 "conversion": "from_input_to_DT_State",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -309,6 +312,7 @@
                 "name": "temp_sensor",
                 "data_type": "DT_Temp",
                 "conversion": "",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -320,6 +324,7 @@
 		"name": "Power_sensor",
 		"data_type": "DT_Power",
 		"conversion": "",
+                "type": "incremental",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -331,6 +336,7 @@
 		"name": "Energy sensor",
 		"data_type": "DT_kActiveEnergy",
 		"conversion": "",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
