@@ -324,7 +324,7 @@
 		"name": "Power_sensor",
 		"data_type": "DT_Power",
 		"conversion": "",
-                "type": "incremental",
+                "type": "absolute",
                 "history": {
                     "store": true,
                     "max": 0,
@@ -336,7 +336,7 @@
 		"name": "Energy sensor",
 		"data_type": "DT_kActiveEnergy",
 		"conversion": "",
-                "type": "absolute",
+                "type": "incremental",
                 "history": {
                     "store": true,
                     "max": 0,
