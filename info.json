@@ -1,6 +1,12 @@
 {
     "products" : [ 
-       {
+      {
+           "name" : "VMB1TS",
+           "id" : "velbus_VMB1TS",
+           "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
+           "type" : "velbus.temp"
+      },
+      {
            "name" : "VMB1RY",
            "id" : "velbus_VMB1RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
@@ -80,14 +86,6 @@
        }
     ],
     "configuration": [
-        {
-            "default": "False", 
-            "description": "Automatically start plugin at Domogik startup", 
-            "key": "startup_startup", 
-            "name": "startup plugin",
-            "required": "yes", 
-            "type": "boolean"
-        }, 
         {
             "default": "0", 
             "description": "define the connection type to velbus", 
