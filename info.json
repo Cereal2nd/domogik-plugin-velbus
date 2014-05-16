@@ -4,85 +4,150 @@
            "name" : "VMB1TS",
            "id" : "velbus_VMB1TS",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
-           "type" : "velbus.temp"
+           "instances": {
+                "temperature": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.temp"],
+                }
+           }
       },
       {
            "name" : "VMB1RY",
            "id" : "velbus_VMB1RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
-           "type" : "velbus.relay"
+           "instances": {
+                "relay": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.relay"],
+                }
+           }
        },
        {
            "name" : "VMB4RY",
            "id" : "velbus_VMB4RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363140",
-           "type" : "velbus.relay"
+           "instances": {
+                "relay": {
+                    "type": "duplicate",
+                    "range": [1, 4],
+                    "instance_types": ["velbus.relay"],
+                }
+           }
        },
        {
            "name" : "VMB4RYLD",
            "id" : "velbus_VMB1RYLD",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=383056",
-           "type" : "velbus.relay"
+           "instances": {
+                "relay": {
+                    "type": "duplicate",
+                    "range": [1, 4],
+                    "instance_types": ["velbus.relay"],
+                }
+           }
        },
        {
            "name" : "VMB4RYNO",
            "id" : "velbus_VMB1RNO",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=383130",
-           "type" : "velbus.relay"
+           "instances": {
+                "relay": {
+                    "type": "duplicate",
+                    "range": [1, 4],
+                    "instance_types": ["velbus.relay"],
+                }
+           }
        },
        {
            "name" : "VMB1RY",
            "id" : "velbus_VMB1RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
-           "type" : "velbus.relay"
+           "instances": {
+                "relay": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.relay"],
+                }
+           }
        },
        {
            "name" : "VMB1LED",
            "id" : "velbus_VMB1LED",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=379644",
-           "type" : "velbus.dimmer"
+           "instances": {
+                "dimmer": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.dimmer"],
+                }
+           }
        },
        {
            "name" : "VMB4DC",
            "id" : "velbus_VMB4DC",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=384234",
-           "type" : "velbus.dimmer"
+           "instances": {
+                "dimmer": {
+                    "type": "duplicate",
+                    "range": [1, 4],
+                    "instance_types": ["velbus.dimmer"],
+                }
+           }
        },
        {
            "name" : "VMBDME",
            "id" : "velbus_VMBDME",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=385774",
-           "type" : "velbus.dimmer"
+           "instances": {
+                "dimmer": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.dimmer"],
+                }
+           }
        },
        {
            "name" : "VMBDMI",
            "id" : "velbus_VMBDMI",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=386050",
-           "type" : "velbus.dimmer"
+           "instances": {
+                "dimmer": {
+                    "type": "fixed",
+                    "instance_types": ["velbus.dimmer"],
+                }
+           }
        },
        {
-           "name" : "VMBRGBDC",
-           "id" : "velbus_VMBRGBDC",
+           "name" : "VMB7IN",
+           "id" : "velbus_VMB7IN",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=385316",
-           "type" : "velbus.dimmer"
-       },
-       {
-           "name" : "VMB1BL",
-           "id" : "velbus_VMB1BL",
-           "documentation" : "http://www.velbus.eu/support/downloads/?id=363200",
-           "type" : "velbus.shutter"
-       },
-       {
-           "name" : "VMB2BL",
-           "id" : "velbus_VMB2BL",
-           "documentation" : "http://www.velbus.eu/support/downloads/?id=363226",
-           "type" : "velbus.shutter"
-       },
-       {
-           "name" : "VMB2BLE",
-           "id" : "velbus_VMB2BLE",
-           "documentation" : "http://www.velbus.eu/support/downloads/?id=409562",
-           "type" : "velbus.shutter"
+           "instances": {
+                "chan1": {
+                    "type": "select",
+                    "options": [
+                        "instance_types": ["velbus.input"],
+                        "instance_types": ["velbus.energy"],
+                    ]
+                },
+                "chan2": {
+                    "type": "select",
+                    "options": [
+                        "instance_types": ["velbus.input"],
+                        "instance_types": ["velbus.energy"],
+                    ]
+                },
+                "chan3": {
+                    "type": "select",
+                    "options": [
+                        "instance_types": ["velbus.input"],
+                        "instance_types": ["velbus.energy"],
+                    ]
+                },
+                "chan4": {
+                    "type": "select",
+                    "options": [
+                        "instance_types": ["velbus.input"],
+                        "instance_types": ["velbus.energy"],
+                    ]
+                }
+           }
        }
     ],
     "configuration": [
@@ -113,18 +178,18 @@
             "schema": "lighting.basic",
             "xplstat_name": "get_level_bin",
             "parameters": {
-                    "static": [],
-                    "device": []
-                }
+                "static": [],
+                "device": []
+            }
          },
          "set_level_range": {
             "name": "set_level_range",
             "schema": "lighting.basic",
             "xplstat_name": "get_level_range",
             "parameters": {
-                    "static": [],
-                    "device": []
-                }
+                "static": [],
+                "device": []
+            }
          }
     },
     "xpl_stats": {
@@ -132,114 +197,114 @@
             "name": "get_level_bin",
             "schema": "lighting.device",
             "parameters": {
-                    "static": [],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "level",
-                             "ignore_values": "",
-                             "sensor": "level_bin"
-                        }
-                    ]
-                }
+                "static": [],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "level",
+                         "ignore_values": "",
+                         "sensor": "level_bin"
+                    }
+                ]
+            }
        },
        "get_level_range": {
             "name": "get_level_range",
             "schema": "lighting.device",
             "parameters": {
-                    "static": [],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "level",
-                             "ignore_values": "",
-                             "sensor": "level_range"
-                        }
-                    ]
-                }
+                "static": [],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "level",
+                         "ignore_values": "",
+                         "sensor": "level_range"
+                    }
+                ]
+            }
        },
        "get_temp": {
             "name": "get_temp",
             "schema": "sensor.basic",
             "parameters": {
-                    "static": [
-			{
-			     "key": "type",
-                             "value": "temp"
-                        },
-			{
-			     "key": "units",
-                             "value": "c"
-                        }
-                    ],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "current",
-                             "ignore_values": "",
-                             "sensor": "temp"
-                        }
-                    ]
+                "static": [
+                    {
+                         "key": "type",
+                         "value": "temp"
+                    },
+                    {
+                         "key": "units",
+                         "value": "c"
+                    }
+                ],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "current",
+                         "ignore_values": "",
+                         "sensor": "temp"
+                    }
+                ]
             }
        },
        "get_input": {
             "name": "get_input",
             "schema": "sensor.basic",
             "parameters": {
-                    "static": [
-			{
-			     "key": "type",
-                             "value": "input"
-                        }
-                    ],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "current",
-                             "ignore_values": "",
-                             "sensor": "input"
-                        }
-                    ]
+                "static": [
+                    {
+                        "key": "type",
+                         "value": "input"
+                    }
+                ],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "current",
+                         "ignore_values": "",
+                         "sensor": "input"
+                    }
+                ]
             }
        },
        "get_power": {
             "name": "get_power",
             "schema": "sensor.basic",
             "parameters": {
-                    "static": [
-			{
-			     "key": "type",
-                             "value": "power"
-                        }
-                    ],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "current",
-                             "ignore_values": "",
-                             "sensor": "power"
-                        }
-                    ]
+                "static": [
+                    {
+                         "key": "type",
+                         "value": "power"
+                    }
+                ],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "current",
+                         "ignore_values": "",
+                         "sensor": "power"
+                    }
+                ]
             }
        },
        "get_energy": {
             "name": "get_energy",
             "schema": "sensor.basic",
             "parameters": {
-                    "static": [
-			{
-			     "key": "type",
-                             "value": "energy"
-                        }
-                    ],
-                    "device": [],
-                    "dynamic": [
-                        {
-                             "key": "current",
-                             "ignore_values": "",
-                             "sensor": "energy"
-                        }
-                    ]
+                "static": [
+                    {
+                         "key": "type",
+                         "value": "energy"
+                    }
+                ],
+                "device": [],
+                "dynamic": [
+                    {
+                         "key": "current",
+                         "ignore_values": "",
+                         "sensor": "energy"
+                    }
+                ]
             }
        }
     },
@@ -270,86 +335,86 @@
         }
     },
     "sensors": {
-	"level_bin": {
-		"name": "level sensor",
-                "data_type": "DT_Switch",
-                "conversion": "from_level_to_DT_Switch",
-                "incremental": false,
-                "history": {
-                    "store": true,
-                    "duplicate": false,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
-	},
-	"level_range": {
-		"name": "level sensor",
-                "data_type": "DT_Scaling",
-                "conversion": "from_level_to_DT_Scaling",
-                "incremental": false,
-                "history": {
-                    "store": true,
-                    "duplicate": false,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
-	},
+        "level_bin": {
+            "name": "level sensor",
+            "data_type": "DT_Switch",
+            "conversion": "from_level_to_DT_Switch",
+            "incremental": false,
+            "history": {
+                "store": true,
+                "duplicate": false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
+        "level_range": {
+            "name": "level sensor",
+            "data_type": "DT_Scaling",
+            "conversion": "from_level_to_DT_Scaling",
+            "incremental": false,
+            "history": {
+                "store": true,
+                "duplicate": false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
         "input": {
-                "name": "sensor_sensor",
-                "data_type": "DT_State",
-                "conversion": "from_input_to_DT_State",
-                "incremental": false,
-                "history": {
-                    "store": true,
-                    "duplicate": false,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
+            "name": "sensor_sensor",
+            "data_type": "DT_State",
+            "conversion": "from_input_to_DT_State",
+            "incremental": false,
+            "history": {
+                "store": true,
+                "duplicate": false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
         },
         "temp": {
-                "name": "temp_sensor",
-                "data_type": "DT_Temp",
-                "conversion": "",
-                "incremental": false,
-                "history": {
-                    "store": true,
-                    "duplicate": false,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
+            "name": "temp_sensor",
+            "data_type": "DT_Temp",
+            "conversion": "",
+            "incremental": false,
+            "history": {
+                "store": true,
+                "duplicate": false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
         },
         "power": {
-		"name": "Power_sensor",
-		"data_type": "DT_Power",
-		"conversion": "",
-                "incremental": false,
-                "history": {
-                    "store": true,
-                    "duplicate": false,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
-	},
+            "name": "Power_sensor",
+            "data_type": "DT_Power",
+            "conversion": "",
+            "incremental": false,
+            "history": {
+                "store": true,
+                "duplicate": false,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+        },
         "energy": {
-		"name": "Energy sensor",
-		"data_type": "DT_kActiveEnergy",
-		"conversion": "",
-                "incremental": true,
-                "history": {
-                    "store": true,
-                    "duplicate": true,
-                    "max": 0,
-                    "expire": 0,
-                    "round_value": 0
-                }
-	}
+            "name": "Energy sensor",
+            "data_type": "DT_kActiveEnergy",
+            "conversion": "",
+            "incremental": true,
+            "history": {
+                "store": true,
+                "duplicate": true,
+                "max": 0,
+                "expire": 0,
+                "round_value": 0
+            }
+	    }
     },
-    "device_types": {
+    "instance_types": {
         "velbus.relay": {
             "id": "velbus.relay",
             "description": "Switch one channel on a device", 
@@ -419,7 +484,7 @@
             ]
         },
         "velbus.energy": {
-	    "id": "velbus.energy",
+            "id": "velbus.energy",
             "description": "Energy counter sensor", 
             "name": "Energy",
             "commands": [],
@@ -442,7 +507,7 @@
                     "min_value": 0
                 }
             ]
-	},
+	    },
         "velbus.shutter": {
             "id": "velbus.shutter",
             "description": "Shutter control (up, down)", 
