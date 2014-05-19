@@ -1,155 +1,144 @@
 {
-    "products" : [ 
-      {
+    "products" : {
+        "VMB1TS": {
            "name" : "VMB1TS",
-           "id" : "velbus_VMB1TS",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
            "instances": {
                 "temperature": {
                     "type": "fixed",
-                    "instance_types": ["velbus.temp"],
+                    "instance_types": ["velbus.temp"]
                 }
            }
-      },
-      {
+        },
+        "VMB1RY": {
            "name" : "VMB1RY",
-           "id" : "velbus_VMB1RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
            "instances": {
                 "relay": {
                     "type": "fixed",
-                    "instance_types": ["velbus.relay"],
+                    "instance_types": ["velbus.relay"]
                 }
            }
-       },
-       {
+        },
+        "VMB4RY": {
            "name" : "VMB4RY",
-           "id" : "velbus_VMB4RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363140",
            "instances": {
                 "relay": {
                     "type": "duplicate",
                     "range": [1, 4],
-                    "instance_types": ["velbus.relay"],
+                    "instance_types": ["velbus.relay"]
                 }
            }
-       },
-       {
+        },
+        "VMB4RYLD": {
            "name" : "VMB4RYLD",
-           "id" : "velbus_VMB1RYLD",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=383056",
            "instances": {
                 "relay": {
                     "type": "duplicate",
                     "range": [1, 4],
-                    "instance_types": ["velbus.relay"],
+                    "instance_types": ["velbus.relay"]
                 }
            }
-       },
-       {
+        },
+        "VMB4RYNO": {
            "name" : "VMB4RYNO",
-           "id" : "velbus_VMB1RNO",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=383130",
            "instances": {
                 "relay": {
                     "type": "duplicate",
                     "range": [1, 4],
-                    "instance_types": ["velbus.relay"],
+                    "instance_types": ["velbus.relay"]
                 }
            }
-       },
-       {
+        },
+        "VMB1RY": {
            "name" : "VMB1RY",
-           "id" : "velbus_VMB1RY",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=363066",
            "instances": {
                 "relay": {
                     "type": "fixed",
-                    "instance_types": ["velbus.relay"],
+                    "instance_types": ["velbus.relay"]
                 }
            }
-       },
-       {
+        },
+        "VMB1LED": {
            "name" : "VMB1LED",
-           "id" : "velbus_VMB1LED",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=379644",
            "instances": {
                 "dimmer": {
                     "type": "fixed",
-                    "instance_types": ["velbus.dimmer"],
+                    "instance_types": ["velbus.dimmer"]
                 }
            }
-       },
-       {
+        },
+        "VMB4DC": {
            "name" : "VMB4DC",
-           "id" : "velbus_VMB4DC",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=384234",
            "instances": {
                 "dimmer": {
                     "type": "duplicate",
                     "range": [1, 4],
-                    "instance_types": ["velbus.dimmer"],
+                    "instance_types": ["velbus.dimmer"]
                 }
            }
-       },
-       {
+        },
+        "VMBDME": {
            "name" : "VMBDME",
-           "id" : "velbus_VMBDME",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=385774",
            "instances": {
                 "dimmer": {
                     "type": "fixed",
-                    "instance_types": ["velbus.dimmer"],
+                    "instance_types": ["velbus.dimmer"]
                 }
            }
-       },
-       {
+        },
+        "VMBDMI": {
            "name" : "VMBDMI",
-           "id" : "velbus_VMBDMI",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=386050",
            "instances": {
                 "dimmer": {
                     "type": "fixed",
-                    "instance_types": ["velbus.dimmer"],
+                    "instance_types": ["velbus.dimmer"]
                 }
            }
-       },
-       {
+        },
+        "VMB7IN": {
            "name" : "VMB7IN",
-           "id" : "velbus_VMB7IN",
            "documentation" : "http://www.velbus.eu/support/downloads/?id=385316",
            "instances": {
                 "chan1": {
                     "type": "select",
-                    "options": [
-                        "instance_types": ["velbus.input"],
-                        "instance_types": ["velbus.energy"],
-                    ]
+                    "options": {
+                        "input": ["velbus.input"],
+                        "energy": ["velbus.energy"]
+                    }
                 },
                 "chan2": {
                     "type": "select",
-                    "options": [
-                        "instance_types": ["velbus.input"],
-                        "instance_types": ["velbus.energy"],
-                    ]
+                    "options": {
+                        "input": ["velbus.input"],
+                        "energy": ["velbus.energy"]
+                    }
                 },
                 "chan3": {
                     "type": "select",
-                    "options": [
-                        "instance_types": ["velbus.input"],
-                        "instance_types": ["velbus.energy"],
-                    ]
+                    "options": {
+                        "input": ["velbus.input"],
+                        "energy": ["velbus.energy"]
+                    }
                 },
                 "chan4": {
                     "type": "select",
-                    "options": [
-                        "instance_types": ["velbus.input"],
-                        "instance_types": ["velbus.energy"],
-                    ]
+                    "options": {
+                        "input": ["velbus.input"],
+                        "energy": ["velbus.energy"]
+                    }
                 }
            }
        }
-    ],
+    },
     "configuration": [
         {
             "default": "0", 
