@@ -10,7 +10,7 @@
                 "serial", 
                 "socket"
             ], 
-            "type": "enum"
+            "type": "choice"
         }, 
         {
             "default": "/dev/ttyACM0", 
@@ -404,7 +404,7 @@
         "domogik_min_version": "0.4.0", 
         "name": "velbus", 
         "type": "plugin", 
-        "version": "0.5.0",
+        "version": "1.0a",
         "tags": ["energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
