@@ -189,6 +189,7 @@
             "data_type": "DT_Switch",
             "conversion": "from_level_to_DT_Switch",
             "incremental": false,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": false,
@@ -202,6 +203,7 @@
             "data_type": "DT_Scaling",
             "conversion": "from_level_to_DT_Scaling",
             "incremental": false,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": false,
@@ -215,6 +217,7 @@
             "data_type": "DT_State",
             "conversion": "from_input_to_DT_State",
             "incremental": false,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": false,
@@ -228,6 +231,7 @@
             "data_type": "DT_Temp",
             "conversion": "",
             "incremental": false,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": false,
@@ -241,6 +245,7 @@
             "data_type": "DT_Power",
             "conversion": "",
             "incremental": false,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": false,
@@ -254,6 +259,7 @@
             "data_type": "DT_kActiveEnergy",
             "conversion": "",
             "incremental": true,
+            "timeout": 0,
             "history": {
                 "store": true,
                 "duplicate": true,
