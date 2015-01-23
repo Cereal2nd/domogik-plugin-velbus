@@ -80,9 +80,6 @@ device                integer                     The decimal address (0 ... 255
 Domogik device type : velbus.temp
 ----------------------------------
 
-.. todo::
-    Verify
-
 2 parameters are needed for a temperature sensor:
 
 ===================== =========================== ======================================================================
@@ -112,7 +109,7 @@ Domogik device type : velbus.shutter
 ------------------------------------
 
 .. todo::
-    Verify
+    This feature is not fully implemented yet. This doc part need to be updated.
 
 2 parameters are needed for a relay:
 
