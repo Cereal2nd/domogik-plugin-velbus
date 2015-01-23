@@ -1,8 +1,11 @@
-.. _index:
+.. _toc:
 
 ================
-Table of content
+Table Of Content
 ================
 
-* :doc:`Plugin documentation </velbus>`
-* :doc:`Helpers documentation </helpers>`
+.. toctree::
+
+    /velbus
+    /dev
+    /changelog
