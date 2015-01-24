@@ -411,7 +411,7 @@
         "name": "velbus", 
         "type": "plugin", 
         "version": "1.0",
-        "tags": ["energy", "hvac", "light", "shutter", "temperature", "heating"]
+        "tags": ["velbus", "relay", "dimmer", "energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
 }
