@@ -12,24 +12,14 @@ Velbus
 
 Velbus is a robust and reliable modular home automation system. The Velbus System is a 4-wire Home Automation System perfect for the DIY enthusiast or professional contractor, thanks to it's easy installation. To interconnect the modules a bus or cat5 cable can be used. Only 4 wires are used (2 for power and 2 for data). There is no central unit making the system extremely reliable and simple. Professional home automation is now within everyone.s reach.
 
-Known issues
-============
-
-None that i know of
 
 Dependencies
 ============
 
     * pyserial (>=2.6)
 
-How to plug
-===========
-
-.. todo:: 
-    Explain how to plug the material. If there is nothing to plug, delete this chapter or replace it with the appropriate one (account creation for a web service, ...)
-
 Create the udev rule
---------------------
+====================
 
 You may create a udev rule for this device. The rule and filename are given in the **Requirements** tab of the plugin configuration page.
 
