@@ -101,7 +101,7 @@ Domogik device type : velbus.shutter
 .. todo::
     This feature is not fully implemented yet. This doc part need to be updated.
 
-2 parameters are needed for a relay:
+2 parameters are needed for a shutter:
 
 ===================== =========================== ======================================================================
 Key                   Type                        Description
