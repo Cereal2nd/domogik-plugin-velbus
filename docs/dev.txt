@@ -2,42 +2,5 @@
 Development informations
 ========================
 
-Timeout on sensors
-==================
-
-The timeout is set to 0 for all sensors : as the interval between 2 checks is a global parameter, we can't set a proper default timeout. If needed, the timeout should be set manually by the user for this plugin.
-
-How it the disk space data calculated ?
-=======================================
-
-The plugin just use the ``os.statvfs(path)`` function.
-
-xPL messages
-============
-
-xpl-stat
---------
-
-The **sensor.basic** message is used: ::
-
-    xpl-stat
-    {
-    ...
-    }
-    sensor.basic
-    {
-    type=<one of these values : total_space, free_space, used_space, percent_used>
-    device=<path>
-    current=<value>
-    }
-
-xpl-trig
---------
-
-n/a
-
-xpl-cmnd
---------
-
-n/a
+Nothing for now.
 
