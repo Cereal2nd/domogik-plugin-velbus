@@ -2,6 +2,11 @@
 Changelog
 =========
 
+1.1
+===
+
+* Doc upgrades
+
 1.0
 ===
 
