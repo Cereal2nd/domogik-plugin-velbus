@@ -1,0 +1,19 @@
+=========
+Changelog
+=========
+
+1.1
+===
+
+* Doc upgrades
+
+1.0
+===
+
+* Adapt the plugin to Domogik 0.4
+
+0.1
+===
+
+* Plugin creation
+

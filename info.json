@@ -309,7 +309,8 @@
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
-                    "min_value": 1
+                    "min_value": 1,
+                    "default": "blah"
                 },
                 {
                     "key": "device",
@@ -410,8 +411,8 @@
         "domogik_min_version": "0.4.0", 
         "name": "velbus", 
         "type": "plugin", 
-        "version": "1.0",
-        "tags": ["energy", "hvac", "light", "shutter", "temperature", "heating"]
+        "version": "1.1",
+        "tags": ["velbus", "relay", "dimmer", "energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
 }
