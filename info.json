@@ -411,7 +411,7 @@
         "domogik_min_version": "0.4.0", 
         "name": "velbus", 
         "type": "plugin", 
-        "version": "1.1",
+        "version": "1.2",
         "tags": ["velbus", "relay", "dimmer", "energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
