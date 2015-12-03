@@ -42,6 +42,7 @@ MODULE_TYPES = {
  32 : {"id": "VMBGP4", "subtype": "INPUT"},
  33 : {"id": "VMBGP0", "subtype": "INPUT"},
  34 : {"id": "VMB7IN", "subtype": "INPUT"},
+ 40 : {"id": "VMBGPOD", "subtype": "INPUT"},
 }
 
 MSG_TYPES = {
@@ -151,7 +152,7 @@ class VelbusDev:
     """
     Velbus domogik plugin
     """
-    def __init__(self, log, cb_send_xpl, cb_send_trig, stop):
+    def __init__(self, log, cb_send_mq, stop):
         """ Init object
             @param log : log instance
             @param cb_send_xpl : callback
@@ -159,8 +160,7 @@ class VelbusDev:
             @param stop : 
         """
         self._log = log
-        self._callback = cb_send_xpl
-        self._cb_send_trig = cb_send_trig
+        self._callback = cb_send_mq
         self._stop = stop
         self._dev = None
         self._devtype = 'serial'
@@ -211,7 +211,7 @@ class VelbusDev:
         for add in range(0,255):
             self.send_moduletyperequest(add)
         self._log.info("Bus scan finished")
- 
+
     def send_shutterup(self, address, channel):
         """ Send shutter up message
         """
@@ -438,10 +438,6 @@ class VelbusDev:
         #chan = self._blinchannel_to_byte(data[5])
         status = ord(data[7])
         
-        #self._callback("lighting.device",
-        #           {"device" : device,
-        #            "level" : level})
-
     def _process_251(self, data):
         """
            Process a 251 Message
@@ -456,10 +452,7 @@ class VelbusDev:
             if (ord(data[7]) & 0x03) == 1:
                 level = 255
             if level != -1:
-                self._callback("lighting.device",
-                    {"device" : str(ord(data[2])),
-                    "channel" : str(channel),
-                    "level" : level})
+                self._callback( str(ord(data[2])), str(channel), 'DT_switch', level )
 
     def _process_238(self, data):
         """
@@ -469,10 +462,7 @@ class VelbusDev:
         level = -1
         level = (100 / 255 ) * ord(data[7])
         if level != -1:
-            self._callback("lighting.device",
-                {"device" : str(ord(data[2])),
-                "channel": str(ord(data[5]) - 1),
-                "level" : level})
+            self._callback( str(ord(data[2])), str(ord(data[5]) - 1), 'DT_Scaling', level )
 
     def _process_190(self, data):
         device = ord(data[2])
@@ -483,15 +473,8 @@ class VelbusDev:
         delay = (ord(data[10]) << 8) + ord(data[11])
         watt = float((1000 * 1000 * 3600) / (delay * pulses))
         # transmit kwh
-        self._callback("sensor.basic",
-               {"device": device, "channel": channel,
-		"type": "energy", "units": "kWh",
-               "current": str(kwh) })
-        # transmit watt
-        self._callback("sensor.basic",
-               {"device": device, "channel": channel,
-		"type": "power", "units": "W",
-               "current": str(watt) })
+        self._callback( device, channel, 'DT_kActiveEnergy', kwh )
+        self._callback( device, channel, 'DT_Power', watt )
 
     def _process_184(self, data):
         """
@@ -502,10 +485,7 @@ class VelbusDev:
             level = -1
             level = (100 / 255 ) * ord(data[7])
             if level != -1:
-                self._callback("lighting.device",
-                    {"device" : str(ord(data[2])),
-                    "channel": str(channel),
-                    "level" : level})
+                self._callback( str(ord(data[2])), str(channel), 'DT_Scaling', level )
   
     def _process_0(self, data):
         """
@@ -520,14 +500,11 @@ class VelbusDev:
         chanrel = self._byte_to_channels(data[6])
         chanlpres = self._byte_to_channels(data[7])
         for chan in chanpres:
-            self._callback("sensor.basic",
-               {"device": str(device), "channel": str(chan), "type": "input", "current": "HIGH" })
+            self._callback( str(device), str(chan), 'DT_State', 1 )
         for chan in chanlpres:
-            self._callback("sensor.basic",
-               {"device": str(device), "channel": str(chan), "type": "input", "current": "LONG" })
+            self._callback( str(device), str(chan), 'DT_State', 1 )
         for chan in chanrel:
-            self._callback("sensor.basic",
-               {"device": str(device), "channel": str(chan), "type": "input", "current": "LOW" })
+            self._callback( str(device), str(chan), 'DT_State', 0 )
 
     def _process_236(self, data):
         """
@@ -556,10 +533,8 @@ class VelbusDev:
                 command = "down"
         else:
             command = "off"
-        if command == "":
-            self._callback("shutter.device",
-               {"device" : device + "-" + chan,
-               "command" : command})    
+        if command != "":
+            self._callback( str(device), str(cha), 'DT_UpDown', command )
 	
     def _process_230(self, data):
         """
@@ -575,9 +550,7 @@ class VelbusDev:
         low = ((low | ord(data[8])) / 32 ) * 0.0625
         high = ord(data[9]) << 8
         high = ((high | ord(data[10])) / 32 ) * 0.0625
-        self._callback("sensor.basic",
-               {"device": device, "type": "temp", "units": "c",
-               "current": str(cur), "lowest": str(low), "highest": str(high) })
+        self._callback( str(device), 0, 'DT_Temp', cur )
 
 # Some convert procs
     def _channels_to_byte(self, chan):
