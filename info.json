@@ -22,92 +22,7 @@
         }
     ], 
     "xpl_commands": {},
-    "xpl_stats": {
-       "get_temp": {
-            "name": "get_temp",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "temp"
-                    },
-                    {
-                         "key": "units",
-                         "value": "c"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "temp"
-                    }
-                ]
-            }
-       },
-       "get_input": {
-            "name": "get_input",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                        "key": "type",
-                         "value": "input"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "input"
-                    }
-                ]
-            }
-       },
-       "get_power": {
-            "name": "get_power",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "power"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "power"
-                    }
-                ]
-            }
-       },
-       "get_energy": {
-            "name": "get_energy",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "energy"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "energy"
-                    }
-                ]
-            }
-       }
-    },
+    "xpl_stats": {},
     "commands": {
        "set_level_bin": {
            "name": "Switch On or Off",
@@ -254,7 +169,7 @@
             "parameters": [
                 {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -263,7 +178,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -280,7 +195,7 @@
             "parameters": [
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -297,7 +212,7 @@
             "parameters": [
                 {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -305,7 +220,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -330,7 +245,7 @@
             "parameters": [
 	        {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 8,
@@ -338,7 +253,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,

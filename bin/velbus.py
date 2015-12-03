@@ -110,7 +110,7 @@ class VelbusManager(Plugin):
         return "{0}-{1}".format(test1, test2)
 
     def on_mdp_request(self, msg):
-        XplPlugin.on_mdp_request(self, msg)
+        Plugin.on_mdp_request(self, msg)
         if msg.get_action() == "client.cmd":
             data = msg.get_data()
             index = self._cmds[data['device_id'],data['command_id']]
