@@ -119,13 +119,16 @@ class VelbusManager(Plugin):
             del index
             if 'level' in data:
                 self.manager.send_level( addr, chan, data['level'])
+                self.send_sensor(addr, chan, ["DT_Scaling" "DT_Switch"], data['level'])
             if 'command' in data:
                 if data['command'] == 'up':
                     self.log.debug("set shutter up")
                     self.manager.send_shutterup( addr, chan )
+                    self.send_sensor(addr, chan, "DT_UpDown", 0)
                 if data['command'] == 'down':
                     self.log.debug("set shutter down")
                     self.manager.send_shutterdown( addr, chan )
+                    self.send_sensor(addr, chan, "DT_UpDown", 1)
             reply_msg = MQMessage()
             reply_msg.set_action('client.cmd.result')
             reply_msg.add_data('status', True)
@@ -134,16 +137,21 @@ class VelbusManager(Plugin):
 
     def send_sensor(self, dev, chan, dt_type, value):
         # find the sensor
-        ind =  (str(dev),str(chan),str(dt_type))
+        if type(dt_type) == list:
+            for dt in dt_type:
+                ind = (str(dev),str(chan),str(dt_type))
+                if ind in self._sens.keys():
+                    break
+        else:
+            ind =  (str(dev),str(chan),str(dt_type))
         if ind in self._sens.keys():
             sen = self._sens[ind]
-            self.log.info("Sending MQ status: sen:%s, value:%s" % (sen, value))
+            self.log.info("Sending MQ status: dev:{0} chan:{1} dt:{2} sen:{3} value:{4}".format(dev, chan, dt_type, sen, value))
             self._pub.send_event('client.sensor',
                          {sen : value})
         else:
             self.log.error("Can not Send MQ status, sensor not found")
             self.log.debug("device: {0} channel: {1} dt: {2}".format(dev, chan, dt_type))
-            print self._sens.keys()
 
     def _parseDevices(self, devices):
         sensors = {}

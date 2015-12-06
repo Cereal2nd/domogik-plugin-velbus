@@ -452,7 +452,7 @@ class VelbusDev:
             if (ord(data[7]) & 0x03) == 1:
                 level = 255
             if level != -1:
-                self._callback( str(ord(data[2])), str(channel), 'DT_switch', level )
+                self._callback( str(ord(data[2])), str(channel), 'DT_Switch', level )
 
     def _process_238(self, data):
         """
