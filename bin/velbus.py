@@ -40,7 +40,7 @@ import re
 
 class VelbusManager(Plugin):
     """
-	Managages the velbus domogik plugin
+	Manages the velbus domogik plugin
     """
     def __init__(self):
         """ Init plugin
