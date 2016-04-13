@@ -41,7 +41,7 @@
            "parameters": [
                {
                    "key": "level",
-                   "data_type": "DT_Scale",
+                   "data_type": "DT_Scaling",
                    "conversion": "from_DT_Scale_to_level"
                }
            ]
