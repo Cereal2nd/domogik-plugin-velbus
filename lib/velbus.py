@@ -483,10 +483,10 @@ class VelbusDev:
         """
         for channel in self._byte_to_channels(data[5]):
             level = -1
-            level = (100 / 255 ) * ord(data[7])
+            level = (ord(data[7] / 100 ) * 255
             if level != -1:
                 self._callback( str(ord(data[2])), str(channel), 'DT_Scaling', level )
-  
+
     def _process_0(self, data):
         """
            Process a 0 Message
