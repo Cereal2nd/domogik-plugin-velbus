@@ -242,10 +242,10 @@ class VelbusDev:
             self._log.error("Request to set a level on a device, but the subtype is not known. mtype {0}".format(mtype))
             return
         if ltype == "DIMMER":
-            """ Send dimemr value
+            """ Send dimmer value
             - speed = 1 second
             """
-            level = (255 / 100) * level
+            level = level
             data = chr(0x07) + self._channels_to_byte(channel) + chr(int(level)) + chr(0x00) + chr(0x01)
             self.write_packet(address, data)
         elif int(level) == 255 and ltype == "RELAY":
@@ -259,7 +259,7 @@ class VelbusDev:
             data = chr(0x01) + self._channels_to_byte(channel)
             self.write_packet(address, data)
         else:
-            self._log.error("This methode should only be called for dimmers or relays and with level 0 to 255")
+            self._log.error("This method should only be called for dimmers or relays and with level 0 to 255")
         return 
         
     def send_moduletyperequest(self, address):
@@ -268,14 +268,14 @@ class VelbusDev:
         self.write_packet(address, None)
 
     def write_packet(self, address, data):
-        """ put a packet in the write queu
+        """ put a packet in the write queue
         """
         self._log.debug("put packet for {0} in send queue ({1})".format(address, data))
         self.write_rfx.put_nowait( {"address": address,
 				"data": data}) 
 
     def write_daemon(self):
-        """ handle the queu
+        """ handle the queue
         """
         self._log.info("write deamon")
         while not self._stop.isSet():
@@ -311,7 +311,7 @@ class VelbusDev:
             self._stop.wait(0.06)
  
     def listen(self, stop):
-        """ Listen thread for incomming VELBUS messages
+        """ Listen thread for incoming VELBUS messages
         """
         self._log.info("Start listening VELBUS")
         # infinite
@@ -399,7 +399,7 @@ class VelbusDev:
                         methodcall( data )
                         parsed = True
                     except AttributeError:
-                        self._log.debug("Messagetype module specifick parser not implemented")	
+                        self._log.debug("Messagetype module specific parser not implemented")	
                 if not parsed:
                     try:
                         methodcall = getattr(self, "_process_{0}".format(ord(data[4])))
@@ -483,8 +483,10 @@ class VelbusDev:
         """
         for channel in self._byte_to_channels(data[5]):
             level = -1
-            level = (ord(data[7] / 100 ) * 255
-            if level != -1:
+            level = ord(data[7])#round(2.55 * ord(data[7]))
+            #self._log.debug("*****184 process data : {0} , channel : {1} ,  level : {2}".format('|'.join(map(str,map(ord,data))),str(channel), level))
+	    #self._log.debug("*****data 7 :" + str(ord(data[7])))
+	    if level != -1:
                 self._callback( str(ord(data[2])), str(channel), 'DT_Scaling', level )
 
     def _process_0(self, data):
