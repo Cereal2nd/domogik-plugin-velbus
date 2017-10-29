@@ -119,7 +119,7 @@ class VelbusManager(Plugin):
             del index
             if 'level' in data:
                 self.manager.send_level( addr, chan, data['level'])
-                self.send_sensor(addr, chan, ["DT_Scaling" "DT_Switch"], data['level'])
+                self.send_sensor(addr, chan, ["DT_Scaling", "DT_Switch"], data['level'])
             if 'command' in data:
                 if data['command'] == 'up':
                     self.log.debug("set shutter up")
@@ -139,8 +139,9 @@ class VelbusManager(Plugin):
         # find the sensor
         if type(dt_type) == list:
             for dt in dt_type:
-                ind = (str(dev),str(chan),str(dt_type))
+                ind = (str(dev),str(chan),str(dt))
                 if ind in self._sens.keys():
+                    self.log.debug("found the sensor")
                     break
         else:
             ind =  (str(dev),str(chan),str(dt_type))

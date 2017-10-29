@@ -399,7 +399,7 @@ class VelbusDev:
                         methodcall( data )
                         parsed = True
                     except AttributeError:
-                        self._log.debug("Messagetype module specific parser not implemented")	
+                        self._log.debug("Messagetype module specific parser not implemented {0}_{1}".format(ord(data[4]),mtype))	
                 if not parsed:
                     try:
                         methodcall = getattr(self, "_process_{0}".format(ord(data[4])))
@@ -507,6 +507,26 @@ class VelbusDev:
             self._callback( str(device), str(chan), 'DT_State', 1 )
         for chan in chanrel:
             self._callback( str(device), str(chan), 'DT_State', 0 )
+
+    def _process_0_17(self, data):
+        """
+           Process a 0 Message for VMB4RYNO
+           switch status => send out when a relay changed
+           HIGH = just pressed
+           LOW = just released
+           LONG = long pressed
+        """
+        device = str(ord(data[2]))
+        chanpres = self._byte_to_channels(data[5])
+        chanrel = self._byte_to_channels(data[6])
+        chanlpres = self._byte_to_channels(data[7])
+        for chan in chanpres:
+            self._callback( str(device), str(chan), 'DT_Switch', 255 )
+        for chan in chanlpres:
+            self._callback( str(device), str(chan), 'DT_Switch', 255 )
+        for chan in chanrel:
+            self._callback( str(device), str(chan), 'DT_Switch', 0 )
+
 
     def _process_236(self, data):
         """
