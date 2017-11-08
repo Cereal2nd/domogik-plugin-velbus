@@ -31,22 +31,21 @@ Velbus usb support
 @organization: Domogik
 """
 
-from domogik.xpl.common.xplmessage import XplMessage
-from domogik.xpl.common.plugin import XplPlugin
-from domogik.xpl.common.xplconnector import Listener
+from domogik.common.plugin import Plugin
+from domogikmq.message import MQMessage
 from domogik_packages.plugin_velbus.lib.velbus import VelbusException
 from domogik_packages.plugin_velbus.lib.velbus import VelbusDev
 import threading
 import re
 
-class VelbusManager(XplPlugin):
+class VelbusManager(Plugin):
     """
-	Managages the velbus domogik plugin
+	Manages the velbus domogik plugin
     """
     def __init__(self):
         """ Init plugin
         """
-        XplPlugin.__init__(self, name='velbus')
+        Plugin.__init__(self, name='velbus')
         # register helpers
         self.register_helper('scan', 'test help', 'scan')
 
@@ -81,11 +80,10 @@ class VelbusManager(XplPlugin):
             return
 
         # Init RFXCOM
-        self.manager = VelbusDev(self.log, self.send_xpl,
-			self.send_trig, self.get_stop())
+        self.manager = VelbusDev(self.log, self.send_sensor, self.get_stop())
         self.add_stop_cb(self.manager.close)
-        
-	# try opening
+        self._sens, self._cmds = self._parseDevices(self.get_device_list(quit_if_no_device = True))
+        # try opening
         try:
             self.manager.open(device, device_type)
         except VelbusException as ex:
@@ -102,12 +100,6 @@ class VelbusManager(XplPlugin):
         self.register_thread(listenthread)
         listenthread.start()
 
-	# Create the xpl listeners
-	Listener(self.process_lighting_basic, self.myxpl,
-		 {'xpltype': 'xpl-cmnd', 'schema': 'lighting.basic'})
-	Listener(self.process_shutter_basic, self.myxpl,
-		 {'xpltype': 'xpl-cmnd', 'schema': 'shutter.basic'})
-
 	# start scanning the bus
         self.manager.scan()
 
@@ -117,49 +109,64 @@ class VelbusManager(XplPlugin):
     def scan(self, test1, test2):
         return "{0}-{1}".format(test1, test2)
 
-    def send_xpl(self, schema, data):
-        """ Send xPL message on network
-        """
-        self.log.info("schema:%s, data:%s" % (schema, data))
-        msg = XplMessage()
-        msg.set_type("xpl-trig")
-        msg.set_schema(schema)
-        for key in data:
-            msg.add_data({key : data[key]})
-        self.myxpl.send(msg)
+    def on_mdp_request(self, msg):
+        Plugin.on_mdp_request(self, msg)
+        if msg.get_action() == "client.cmd":
+            data = msg.get_data()
+            index = self._cmds[data['device_id'],data['command_id']]
+            addr = index['dev']
+            chan = index['chan']
+            del index
+            if 'level' in data:
+                self.manager.send_level( addr, chan, data['level'])
+                self.send_sensor(addr, chan, ["DT_Scaling", "DT_Switch"], data['level'])
+            if 'command' in data:
+                if data['command'] == 'up':
+                    self.log.debug("set shutter up")
+                    self.manager.send_shutterup( addr, chan )
+                    self.send_sensor(addr, chan, "DT_UpDown", 0)
+                if data['command'] == 'down':
+                    self.log.debug("set shutter down")
+                    self.manager.send_shutterdown( addr, chan )
+                    self.send_sensor(addr, chan, "DT_UpDown", 1)
+            reply_msg = MQMessage()
+            reply_msg.set_action('client.cmd.result')
+            reply_msg.add_data('status', True)
+            reply_msg.add_data('reason', None)
+            self.reply(reply_msg.get())
 
-    def send_trig(self, message):
-        """ Send xpl-trig given message
-            @param message : xpl-trig message
-        """
-        self.myxpl.send(message)
-
-    def process_lighting_basic(self, message):
-        """ Process xpl chema lightning.basic
-        """
-        print message
-        #self.send_xpl("lighting.device", message.data)
-        device = message.data['device']
-        chan = message.data['channel']
-        if message.data["level"] == 'None':
-            message.data["level"] = 0
-        self.manager.send_level( device, chan, message.data["level"])
-
-    def process_shutter_basic(self, message):
-        """ Process xpl chema shutter.basic
-        """
-        self.send_xpl("shutter.device", message.data)
-        add = message.data['device'].split('-')
-        chan = int(add[1])
-        address = add[0]
-        if message.data["command"] == "up":
-            self.log.debug("set shutter up")
-            self.manager.send_shutterup( address, chan )
-        elif message.data["command"] == "down":
-            self.log.debug("set shutter down")
-            self.manager.send_shutterdown( address, chan )
+    def send_sensor(self, dev, chan, dt_type, value):
+        # find the sensor
+        if type(dt_type) == list:
+            for dt in dt_type:
+                ind = (str(dev),str(chan),str(dt))
+                if ind in self._sens.keys():
+                    self.log.debug("found the sensor")
+                    break
         else:
-            self.log.debug("Unknown command in shutter.basic message")
+            ind =  (str(dev),str(chan),str(dt_type))
+        if ind in self._sens.keys():
+            sen = self._sens[ind]
+            self.log.info("Sending MQ status: dev:{0} chan:{1} dt:{2} sen:{3} value:{4}".format(dev, chan, dt_type, sen, value))
+            self._pub.send_event('client.sensor',
+                         {sen : value})
+        else:
+            self.log.error("Can not Send MQ status, sensor not found")
+            self.log.debug("device: {0} channel: {1} dt: {2}".format(dev, chan, dt_type))
+
+    def _parseDevices(self, devices):
+        sensors = {}
+        commands = {}
+        for dev in devices:
+            if 'device' in dev['parameters'] and 'channel' in dev['parameters']:
+                for cmdn in dev['commands']:
+                    cmd = dev['commands'][cmdn]
+                    commands[dev['id'],cmd['id']] = { 'dev': dev['parameters']['device']['value'], 'chan': dev['parameters']['channel']['value'] }
+                for senn in dev['sensors']:
+                    sen = dev['sensors'][senn]
+                    ind = (str(dev['parameters']['device']['value']),str(dev['parameters']['channel']['value']),str(sen['data_type']))
+                    sensors[ind] = sen['id']
+        return sensors, commands
        
 if __name__ == "__main__":
     VelbusManager()

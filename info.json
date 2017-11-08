@@ -21,142 +21,8 @@
             "type": "string"
         }
     ], 
-    "xpl_commands": {
-         "set_level_bin": {
-            "name": "blah",
-            "schema": "lighting.basic",
-            "xplstat_name": "get_level_bin",
-            "parameters": {
-                "static": [],
-                "device": []
-            }
-         },
-         "set_level_range": {
-            "name": "set_level_range",
-            "schema": "lighting.basic",
-            "xplstat_name": "get_level_range",
-            "parameters": {
-                "static": [],
-                "device": []
-            }
-         }
-    },
-    "xpl_stats": {
-       "get_level_bin": {
-            "name": "get_level_bin",
-            "schema": "lighting.device",
-            "parameters": {
-                "static": [],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "level",
-                         "ignore_values": "",
-                         "sensor": "level_bin"
-                    }
-                ]
-            }
-       },
-       "get_level_range": {
-            "name": "get_level_range",
-            "schema": "lighting.device",
-            "parameters": {
-                "static": [],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "level",
-                         "ignore_values": "",
-                         "sensor": "level_range"
-                    }
-                ]
-            }
-       },
-       "get_temp": {
-            "name": "get_temp",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "temp"
-                    },
-                    {
-                         "key": "units",
-                         "value": "c"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "temp"
-                    }
-                ]
-            }
-       },
-       "get_input": {
-            "name": "get_input",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                        "key": "type",
-                         "value": "input"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "input"
-                    }
-                ]
-            }
-       },
-       "get_power": {
-            "name": "get_power",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "power"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "power"
-                    }
-                ]
-            }
-       },
-       "get_energy": {
-            "name": "get_energy",
-            "schema": "sensor.basic",
-            "parameters": {
-                "static": [
-                    {
-                         "key": "type",
-                         "value": "energy"
-                    }
-                ],
-                "device": [],
-                "dynamic": [
-                    {
-                         "key": "current",
-                         "ignore_values": "",
-                         "sensor": "energy"
-                    }
-                ]
-            }
-       }
-    },
+    "xpl_commands": {},
+    "xpl_stats": {},
     "commands": {
        "set_level_bin": {
            "name": "Switch On or Off",
@@ -167,8 +33,7 @@
                    "data_type": "DT_Switch",
                    "conversion": "from_DT_Switch_to_level"
                }
-           ],
-           "xpl_command": "set_level_bin"
+           ]
         },
         "set_level_range": {
            "name": "Set to a level",
@@ -176,11 +41,10 @@
            "parameters": [
                {
                    "key": "level",
-                   "data_type": "DT_Scale",
+                   "data_type": "DT_Scaling",
                    "conversion": "from_DT_Scale_to_level"
                }
-           ],
-           "xpl_command": "set_level_range"
+           ]
         }
     },
     "sensors": {
@@ -279,7 +143,7 @@
             "parameters": [
                 {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -287,7 +151,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -305,7 +169,7 @@
             "parameters": [
                 {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -314,7 +178,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -331,7 +195,7 @@
             "parameters": [
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -348,7 +212,7 @@
             "parameters": [
                 {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 4,
@@ -356,7 +220,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -381,7 +245,7 @@
             "parameters": [
 	        {
                     "key": "channel",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The channel number",
                     "type": "integer",
                     "max_value": 8,
@@ -389,7 +253,7 @@
                 },
                 {
                     "key": "device",
-                    "xpl": true,
+                    "xpl": false,
                     "description": "The decimal address",
                     "type": "integer",
                     "max_value": 255,
@@ -408,10 +272,10 @@
             }
         ], 
         "description": "velbus interface", 
-        "domogik_min_version": "0.4.0", 
+        "domogik_min_version": "0.5.0", 
         "name": "velbus", 
         "type": "plugin", 
-        "version": "1.1",
+        "version": "1.5",
         "tags": ["velbus", "relay", "dimmer", "energy", "hvac", "light", "shutter", "temperature", "heating"]
     }, 
     "json_version": 2
