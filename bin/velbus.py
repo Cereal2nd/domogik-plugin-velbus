@@ -80,12 +80,12 @@ class VelbusManager(Plugin):
             return
 
         # Init RFXCOM
-        self.manager = VelbusDev(self.log, self.send_sensor, self.get_stop())
+        self.manager = VelbusDev(self.log, self.send_sensor, self.get_stop(), device_type, device)
         self.add_stop_cb(self.manager.close)
         self._sens, self._cmds = self._parseDevices(self.get_device_list(quit_if_no_device = True))
         # try opening
         try:
-            self.manager.open(device, device_type)
+            self.manager.open()
         except VelbusException as ex:
             self.log.error(ex.value)
             self.force_leave()

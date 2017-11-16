@@ -7,6 +7,7 @@ import serial
 import socket
 import traceback
 import threading
+import time
 from Queue import Queue
 
 MODULE_TYPES = {
@@ -26,7 +27,7 @@ MODULE_TYPES = {
  16 : {"id": "VMB4RYLD", "subtype": "RELAY", "channels": 4},
  17 : {"id": "VMB4RYNO", "subtype": "RELAY", "channels": 4},
  18 : {"id": "VMB4DC", "subtype": "DIMMER", "channels": 4},
- 19 : {"id": "VMBMPD", "subtype": "UNKNOWN"},
+ 19 : {"id": "VMBLCDWB", "subtype": "UNKNOWN"},
  20 : {"id": "VMBDME", "subtype": "DIMMER", "channels": 1},
  21 : {"id": "VMBDMI", "subtype": "DIMMER", "channels": 1},
  22 : {"id": "VMB8PBU", "subtype": "INPUT"},
@@ -43,7 +44,18 @@ MODULE_TYPES = {
  33 : {"id": "VMBGP0", "subtype": "INPUT"},
  34 : {"id": "VMB7IN", "subtype": "INPUT"},
  40 : {"id": "VMBGPOD", "subtype": "INPUT"},
+ 41 : {"id": "VMB1RYNOS", "subtype": "RELAY", "channels": 1},
+ 42 : {"id": "VMBPIRM", "subtype": "INPUT"},
+ 43 : {"id": "VMBPIRC", "subtype": "INPUT"},
+ 44 : {"id": "VMBPIRO", "subtype": "INPUT"},
+ 45 : {"id": "VMBGP4PIR", "subtype": "INPUT"},
+ 46 : {"id": "VMB1BLS", "subtype": "BLIND", "channels": 1},
+ 47 : {"id": "VMBDMI-R", "subtype": "DIMMER", "channels": 1},
+ 49 : {"id": "VMBMETEO", "subtype": "INPUT"},
+ 50 : {"id": "VMB4AN", "subtype": "INPUT"},
 }
+
+MSG_TYPES_IGNORED = [9, 10, 11, 12, 13, 14, 15, 96, 97, 98, 99, 100, 101, 102, 103, 104, 105, 175, 183, 199, 200, 201, 202, 203, 203, 210, 211, 212, 214, 215, 216, 217, 218, 227, 253, 250, 254] 
 
 MSG_TYPES = {
   0 : "switch status",
@@ -72,6 +84,7 @@ MSG_TYPES = {
   103 : "firmware memory",
   104 : "firmware memory write confirmed",
   105 : "read firmware memory",
+  175 : "daylight saving status",
   183 : "date set",
   184 : "dimmer channel status",
   190 : "kWh status",
@@ -152,7 +165,7 @@ class VelbusDev:
     """
     Velbus domogik plugin
     """
-    def __init__(self, log, cb_send_mq, stop):
+    def __init__(self, log, cb_send_mq, stop, devtype, devstr):
         """ Init object
             @param log : log instance
             @param cb_send_xpl : callback
@@ -163,7 +176,8 @@ class VelbusDev:
         self._callback = cb_send_mq
         self._stop = stop
         self._dev = None
-        self._devtype = 'serial'
+        self._devtype = devtype
+        self._devstr = devstr
         self._nodes = {}
 
         # Queue for writing packets to Rfxcom
@@ -177,23 +191,22 @@ class VelbusDev:
                                          {})
         write_process.start()
 
-    def open(self, device, devicetype):
+    def open(self):
         """ Open (opens the device once)
 	    @param device : the device string to open
         """
-        self._devtype = devicetype
         try:
-            self._log.info("Try to open VELBUS: %s" % device)
-            if devicetype == 'socket':
-                addr = device.split(':')
+            self._log.info("Try to open VELBUS: %s" % self._devstr)
+            if self._devtype == 'socket':
+                addr = self._devstr.split(':')
                 addr = (addr[0], int(addr[1]))
                 self._dev = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
                 self._dev.connect( addr )
             else:
-                self._dev = serial.Serial(device, 38400, timeout=0)
+                self._dev = serial.Serial(self._devstr, 38400, timeout=0)
             self._log.info("VELBUS opened")
         except:
-            error = "Error while opening Velbus : %s. Check if it is the good device or if you have the good permissions on it." % device
+            error = "Error while opening Velbus : %s. Check if it is the good device or if you have the good permissions on it." % self._devstr
             raise VelbusException(error)
 
     def close(self):
@@ -335,6 +348,11 @@ class VelbusDev:
             if ord(data[0]) == 0x0f:
                 size = ord(data[3]) & 0x0F
                 self._parser(data[0:6+size])
+        if len(data) == 0:
+            self._log.warning("Socket disconnected, trying to reconnect, sleeping 10 sec, then trying to reconnect")
+            self._stop.wait(10)
+            self.close()
+            self.open()
 
     def _checksum(self, data):
         """
@@ -379,6 +397,10 @@ class VelbusDev:
             return
         if data_size > 0:
             if ord(data[4]) in MSG_TYPES:
+                # see if we ignore this messgae type
+                if ord(data[4]) in MSG_TYPES_IGNORED:
+                    self._log.debug("Received message with type: '%s' ignoring this message type" % (MSG_TYPES[ord(data[4])]) )
+                    return
                 # lookup the module type
                 try:
                     if ord(data[2]) in self._nodes.keys():
@@ -400,12 +422,16 @@ class VelbusDev:
                         parsed = True
                     except AttributeError:
                         self._log.debug("Messagetype module specific parser not implemented {0}_{1}".format(ord(data[4]),mtype))	
+                    except Exception as exp:
+                        self._log.error( exp ); 
                 if not parsed:
                     try:
                         methodcall = getattr(self, "_process_{0}".format(ord(data[4])))
                         methodcall( data )
                     except AttributeError:
                         self._log.debug("Messagetype unimplemented {0}".format(ord(data[4])))
+                    except Exception as exp:
+                        self._log.error( exp ); 
             else:
                 self._log.warning("Received message with unknown type {0}".format(ord(data[4])))
         else:
@@ -556,7 +582,7 @@ class VelbusDev:
         else:
             command = "off"
         if command != "":
-            self._callback( str(device), str(cha), 'DT_UpDown', command )
+            self._callback( str(device), chan, 'DT_UpDown', command )
 	
     def _process_230(self, data):
         """
@@ -599,6 +625,8 @@ class VelbusDev:
         """
            Convert a channel 1 or 2 to its correct byte
         """
+        if type(channel) is str:
+            channel = int(channel.encode('hex'))
         assert isinstance(channel, int)
         if channel == 1:
             return chr(0x03)
